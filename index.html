@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>T10 SHOWDOWN</title>
+    <meta
+      name="description"
+      content="T10 SHOWDOWN — Presented by TREMENDOUS 10. Premium Class 10 Chess Tournament presentation and bracket system."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar">
+        <div class="brand-lockup">
+          <div class="brand-mark">T10</div>
+          <div class="brand-text">
+            <span class="kicker">PRESENTED BY TREMENDOUS 10</span>
+            <span class="title">T10 SHOWDOWN</span>
+          </div>
+        </div>
+        <nav class="nav">
+          <a href="#landing">Home</a>
+          <a href="#bracket">Bracket</a>
+          <a href="#final">Final</a>
+          <a href="#history">History</a>
+          <a href="#admin-panel">Admin</a>
+        </nav>
+      </header>
+
+      <main>
+        <section id="landing" class="hero section-panel">
+          <div class="hero-copy">
+            <p class="eyebrow">PRESENTED BY TREMENDOUS 10</p>
+            <h1>T10 SHOWDOWN</h1>
+            <div class="slogan-row">
+              <span>THINK</span>
+              <span class="divider">•</span>
+              <span>MOVE</span>
+              <span class="divider">•</span>
+              <span>WIN</span>
+            </div>
+            <p class="subhead">
+              Class 10 Chess Tournament. One stage. One champion. A premium championship experience built around the actual tournament record.
+            </p>
+            <div class="hero-actions">
+              <a class="button primary" href="#bracket">Explore Bracket</a>
+              <button class="button ghost" id="toggle-presentation-mode">Presentation Mode</button>
+            </div>
+            <div class="status-pill pending-final">
+              <span class="dot"></span>
+              Grand Final Result Pending
+            </div>
+          </div>
+          <div class="hero-visual" aria-label="T10 Showdown chess emblem">
+            <div class="chess-emblem">
+              <div class="crown-top"></div>
+              <div class="king-body">
+                <div class="king-head"></div>
+                <div class="king-neck"></div>
+              </div>
+              <div class="shield"></div>
+              <div class="t10-badge">T10</div>
+              <div class="showdown-ribbon">SHOWDOWN</div>
+              <div class="horse horse-left"></div>
+              <div class="horse horse-right"></div>
+            </div>
+          </div>
+        </section>
+
+        <section id="bracket" class="section-block">
+          <div class="section-heading">
+            <p class="eyebrow">Tournament Structure</p>
+            <h2>Championship Bracket</h2>
+          </div>
+          <div id="bracket-container" class="bracket-board"></div>
+        </section>
+
+        <section id="final" class="section-block">
+          <div class="section-heading">
+            <p class="eyebrow">Championship</p>
+            <h2>Final Championship Screen</h2>
+          </div>
+          <div id="final-stage" class="final-stage"></div>
+        </section>
+
+        <section class="section-block">
+          <div class="section-heading">
+            <p class="eyebrow">Official Results</p>
+            <h2>Third-Place Finish</h2>
+          </div>
+          <div id="third-place-stage" class="third-place-stage"></div>
+        </section>
+
+        <section id="history" class="section-block">
+          <div class="section-heading">
+            <p class="eyebrow">Championship History</p>
+            <h2>Previous Champions</h2>
+          </div>
+          <div id="history-container" class="history-grid"></div>
+        </section>
+
+        <section class="section-block">
+          <div class="section-heading">
+            <p class="eyebrow">Appreciation</p>
+            <h2>Chief Guest & Referee</h2>
+          </div>
+          <div class="appreciation-grid">
+            <article class="appreciation-card guest-card">
+              <h3>Chief Guest</h3>
+              <p class="big-name">MR. SUMAN SHRESTHA</p>
+              <p>“With sincere gratitude and respect for your valuable presence, encouragement, and gracious contribution to our Class 10 Chess Championship. Your presence made our event more meaningful and memorable.”</p>
+            </article>
+            <article class="appreciation-card referee-card">
+              <h3>Chief Referee</h3>
+              <p class="big-name">SONU DAS</p>
+              <p>With respect and gratitude for the fairness, discipline, and leadership that guided the tournament to its official conclusion.</p>
+            </article>
+          </div>
+        </section>
+
+        <section id="admin-panel" class="section-block admin-block">
+          <div class="section-heading">
+            <p class="eyebrow">Administration</p>
+            <h2>Protected Result Management</h2>
+          </div>
+          <div class="admin-layout">
+            <div class="admin-panel-card">
+              <h3>Match Results</h3>
+              <div id="admin-list" class="admin-list"></div>
+            </div>
+            <div class="admin-panel-card">
+              <h3>Match Editor</h3>
+              <div id="admin-editor"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="section-block">
+          <div class="section-heading">
+            <p class="eyebrow">Clock System</p>
+            <h2>Chess Clock Demo</h2>
+          </div>
+          <div id="clock-demo" class="clock-demo"></div>
+        </section>
+
+        <section class="section-block">
+          <div class="section-heading">
+            <p class="eyebrow">Certificates</p>
+            <h2>Official Award Certificates</h2>
+          </div>
+          <div id="certificate-panel" class="certificate-panel"></div>
+        </section>
+      </main>
+    </div>
+
+    <div id="modal-root"></div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
