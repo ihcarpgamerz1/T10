@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Admin | T10 SHOWDOWN</title>
+    <meta name="description" content="Private T10 Showdown tournament administration." />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@400;500;600;700;800;900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body data-page="admin">
+    <div class="page-shell">
+      <header class="topbar">
+        <a class="brand-lockup" href="/">
+          <span class="brand-mark">
+            <img class="brand-logo" src="/logo-transparent.png" alt="T10 Showdown logo" width="52" height="52" />
+          </span>
+          <span class="brand-text">
+            <span class="kicker">PRESENTED BY TREMENDOUS 10</span>
+            <span class="title">T10 SHOWDOWN</span>
+          </span>
+        </a>
+        <nav class="nav" aria-label="Admin navigation">
+          <a href="/">View Tournament</a>
+        </nav>
+      </header>
+
+      <main>
+        <p id="admin-feedback" class="admin-feedback" role="status" aria-live="polite" hidden></p>
+        <section id="admin-login" class="section-block admin-access">
+          <div class="section-heading">
+            <p class="eyebrow">Authorized Officials</p>
+            <h1>Administration Sign In</h1>
+          </div>
+          <div class="admin-login-card">
+            <div class="admin-login-mark" aria-hidden="true">T10</div>
+            <p class="admin-intro">Sign in to manage official match results and confirm the championship.</p>
+            <form id="admin-login-form">
+              <div class="field-group">
+                <label for="admin-password">Admin password</label>
+                <input
+                  id="admin-password"
+                  name="password"
+                  type="password"
+                  autocomplete="current-password"
+                  required
+                  maxlength="256"
+                  autofocus
+                />
+              </div>
+              <button class="button primary admin-submit" type="submit">Sign in securely</button>
+            </form>
+            <p class="admin-security-note">Your sign-in is verified by the tournament server.</p>
+          </div>
+        </section>
+
+        <section id="admin-content" class="section-block admin-block" hidden>
+          <div class="section-heading admin-console-heading">
+            <div>
+              <p class="eyebrow">Live Tournament Desk</p>
+              <h1>Match Control Center</h1>
+              <p class="admin-console-intro">Review the bracket, record official results, and preview the winner reveal.</p>
+            </div>
+            <button id="admin-logout" class="button ghost" type="button">Sign out</button>
+          </div>
+          <div id="admin-summary" class="admin-summary" aria-label="Tournament match summary"></div>
+          <div class="admin-layout">
+            <section class="admin-panel-card">
+              <div class="admin-card-heading">
+                <div>
+                  <p class="eyebrow">Tournament bracket</p>
+                  <h2>Match Results</h2>
+                </div>
+                <span class="admin-card-hint">Select a match to edit</span>
+              </div>
+              <div id="admin-list" class="admin-list"></div>
+            </section>
+            <section class="admin-panel-card">
+              <div class="admin-card-heading">
+                <div>
+                  <p class="eyebrow">Official record</p>
+                  <h2>Match Editor</h2>
+                </div>
+              </div>
+              <div id="admin-editor"></div>
+            </section>
+          </div>
+          <section class="admin-panel-card admin-committee-card" aria-labelledby="admin-committee-heading">
+            <div class="committee-admin-heading">
+              <div>
+                <p class="eyebrow">Event Team</p>
+                <h2 id="admin-committee-heading">Organizing Committee</h2>
+              </div>
+              <a class="committee-view-link" href="/#organizing-committee">View public page</a>
+            </div>
+            <div id="admin-committee-list" class="committee-grid committee-grid-admin"></div>
+          </section>
+          <div id="winner-reveal" class="winner-reveal hidden" aria-live="polite"></div>
+        </section>
+      </main>
+    </div>
+    <script src="/app.js"></script>
+  </body>
+</html>

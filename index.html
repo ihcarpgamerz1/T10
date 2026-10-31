@@ -16,11 +16,14 @@
     />
     <link rel="stylesheet" href="styles.css" />
   </head>
-  <body>
+  <body data-page="public">
+    <div id="page-scroll-progress" class="page-scroll-progress" aria-hidden="true"></div>
     <div class="page-shell">
       <header class="topbar">
         <div class="brand-lockup">
-          <div class="brand-mark">T10</div>
+          <div class="brand-mark">
+            <img class="brand-logo" src="logo-transparent.png" alt="T10 Showdown logo" width="52" height="52" />
+          </div>
           <div class="brand-text">
             <span class="kicker">PRESENTED BY TREMENDOUS 10</span>
             <span class="title">T10 SHOWDOWN</span>
@@ -31,11 +34,16 @@
           <a href="#bracket">Bracket</a>
           <a href="#final">Final</a>
           <a href="#history">History</a>
-          <a href="#admin-panel">Admin</a>
+          <a href="#organizing-committee">Committee</a>
+          <button id="open-banner-viewer" class="nav-banner-button" type="button" aria-haspopup="dialog" aria-expanded="false">
+            Banner
+          </button>
+          <a href="/admin">Admin</a>
         </nav>
       </header>
 
       <main>
+        <p id="app-feedback" class="app-feedback" role="status" hidden></p>
         <section id="landing" class="hero section-panel">
           <div class="hero-copy">
             <p class="eyebrow">PRESENTED BY TREMENDOUS 10</p>
@@ -52,26 +60,16 @@
             </p>
             <div class="hero-actions">
               <a class="button primary" href="#bracket">Explore Bracket</a>
-              <button class="button ghost" id="toggle-presentation-mode">Presentation Mode</button>
+              <button class="button replay-button" id="start-tournament-replay" type="button">Watch Tournament Replay</button>
+              <button class="button ghost" id="toggle-presentation-mode" type="button" aria-pressed="false">Presentation Mode</button>
             </div>
-            <div class="status-pill pending-final">
+            <div class="status-pill pending-final" aria-live="polite">
               <span class="dot"></span>
               Grand Final Result Pending
             </div>
           </div>
-          <div class="hero-visual" aria-label="T10 Showdown chess emblem">
-            <div class="chess-emblem">
-              <div class="crown-top"></div>
-              <div class="king-body">
-                <div class="king-head"></div>
-                <div class="king-neck"></div>
-              </div>
-              <div class="shield"></div>
-              <div class="t10-badge">T10</div>
-              <div class="showdown-ribbon">SHOWDOWN</div>
-              <div class="horse horse-left"></div>
-              <div class="horse horse-right"></div>
-            </div>
+          <div class="hero-visual">
+            <img class="hero-logo" src="logo-transparent.png" alt="Official T10 Showdown chess crest" width="986" height="919" />
           </div>
         </section>
 
@@ -113,33 +111,44 @@
             <h2>Chief Guest & Referee</h2>
           </div>
           <div class="appreciation-grid">
-            <article class="appreciation-card guest-card">
-              <h3>Chief Guest</h3>
-              <p class="big-name">MR. SUMAN SHRESTHA</p>
+            <article
+              id="chief-guest-card"
+              class="appreciation-card guest-card guest-certificate-card"
+              role="button"
+              tabindex="0"
+              aria-haspopup="dialog"
+              aria-controls="certificate-viewer"
+              aria-label="View the Token of Love certificate for Chief Guest Mr. Suman Shrestha"
+            >
+              <div class="appreciation-person-heading">
+                <img class="appreciation-person-photo" src="/suman1.png" alt="Mr. Suman Shrestha, Chief Guest" width="640" height="640" loading="lazy" />
+                <div>
+                  <h3>Chief Guest</h3>
+                  <p class="big-name">MR. SUMAN SHRESTHA</p>
+                </div>
+              </div>
               <p>“With sincere gratitude and respect for your valuable presence, encouragement, and gracious contribution to our Class 10 Chess Championship. Your presence made our event more meaningful and memorable.”</p>
+              <p class="certificate-card-prompt">View his Token of Love certificate <span aria-hidden="true">↗</span></p>
             </article>
-            <article class="appreciation-card referee-card">
-              <h3>Chief Referee</h3>
-              <p class="big-name">SONU DAS</p>
+            <article
+              id="chief-referee-card"
+              class="appreciation-card referee-card guest-certificate-card"
+              role="button"
+              tabindex="0"
+              aria-haspopup="dialog"
+              aria-controls="certificate-viewer"
+              aria-label="View the Token of Love certificate for Chief Referee Mr. Sonu Das"
+            >
+              <div class="appreciation-person-heading">
+                <img class="appreciation-person-photo" src="/sonu.jpg" alt="Mr. Sonu Das, Chief Referee" width="1068" height="1080" loading="lazy" />
+                <div>
+                  <h3>Chief Referee</h3>
+                  <p class="big-name">MR. SONU DAS</p>
+                </div>
+              </div>
               <p>With respect and gratitude for the fairness, discipline, and leadership that guided the tournament to its official conclusion.</p>
+              <p class="certificate-card-prompt">View his Token of Love certificate <span aria-hidden="true">↗</span></p>
             </article>
-          </div>
-        </section>
-
-        <section id="admin-panel" class="section-block admin-block">
-          <div class="section-heading">
-            <p class="eyebrow">Administration</p>
-            <h2>Protected Result Management</h2>
-          </div>
-          <div class="admin-layout">
-            <div class="admin-panel-card">
-              <h3>Match Results</h3>
-              <div id="admin-list" class="admin-list"></div>
-            </div>
-            <div class="admin-panel-card">
-              <h3>Match Editor</h3>
-              <div id="admin-editor"></div>
-            </div>
           </div>
         </section>
 
@@ -158,10 +167,55 @@
           </div>
           <div id="certificate-panel" class="certificate-panel"></div>
         </section>
+
+        <section id="organizing-committee" class="section-block committee-section">
+          <div class="section-heading">
+            <p class="eyebrow">With Thanks</p>
+            <h2>Organizing Committee</h2>
+          </div>
+          <div id="public-committee-list" class="committee-grid"></div>
+        </section>
       </main>
     </div>
 
     <div id="winner-reveal" class="winner-reveal hidden" aria-live="polite"></div>
+    <section id="banner-viewer" class="banner-viewer" role="dialog" aria-modal="true" aria-labelledby="banner-viewer-title" aria-hidden="true" hidden>
+      <header class="banner-viewer-header">
+        <div>
+          <p class="eyebrow">T10 SHOWDOWN · OFFICIAL ARTWORK</p>
+          <h2 id="banner-viewer-title">Tournament banner</h2>
+        </div>
+        <div class="banner-viewer-actions">
+          <button id="toggle-banner-fullscreen" class="banner-viewer-fullscreen" type="button">Enter fullscreen</button>
+          <a id="download-banner-image" class="banner-viewer-download" href="/banner.png" download="t10-showdown-banner.png">Download image</a>
+          <button id="close-banner-viewer" class="banner-viewer-close" type="button" aria-label="Close banner">Close <span aria-hidden="true">×</span></button>
+        </div>
+      </header>
+      <div class="banner-viewer-art">
+        <img id="banner-viewer-image" src="/banner.png" alt="T10 Showdown Class 10 Chess Tournament banner" width="1664" height="936" />
+      </div>
+      <div class="banner-viewer-controls" role="group" aria-label="Choose a banner">
+        <button type="button" class="active" data-banner-choice="banner" aria-pressed="true">Tournament banner</button>
+        <button type="button" data-banner-choice="finale" aria-pressed="false">Grand Final banner</button>
+      </div>
+      <p id="banner-viewer-status" class="banner-viewer-status" role="status" aria-live="polite"></p>
+    </section>
+    <section id="certificate-viewer" class="certificate-viewer" role="dialog" aria-modal="true" aria-labelledby="certificate-preview-title" aria-hidden="true" hidden>
+      <header class="certificate-viewer-header">
+        <div>
+          <p class="eyebrow">T10 SHOWDOWN · RECOGNITION</p>
+          <h2 id="certificate-preview-title">Generated certificate</h2>
+        </div>
+        <button id="close-certificate-preview" class="certificate-viewer-close" type="button">Close <span aria-hidden="true">×</span></button>
+      </header>
+      <div id="certificate-preview-content" class="certificate-preview-content"></div>
+      <footer class="certificate-viewer-actions">
+        <p id="certificate-download-status" role="status" aria-live="polite"></p>
+        <button id="download-certificate" class="certificate-download-button" type="button">Download certificate</button>
+        <button id="print-certificate" class="certificate-print-button" type="button">Print / Save as PDF</button>
+      </footer>
+    </section>
+    <div id="certificate-print" class="print-certificate" aria-hidden="true"></div>
     <div id="modal-root"></div>
 
     <script src="app.js"></script>

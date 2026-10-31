@@ -1,0 +1,182 @@
+{
+  "eventInfo": {
+    "name": "T10 SHOWDOWN",
+    "organizer": "TREMENDOUS 10",
+    "slogan": "THINK • MOVE • WIN",
+    "chiefGuest": "Mr. Suman Shrestha",
+    "chiefReferee": "Sonu Das",
+    "status": "Grand Final Pending"
+  },
+  "players": [
+    {
+      "id": "p1",
+      "name": "Sahaj Shrestha"
+    },
+    {
+      "id": "p2",
+      "name": "Ridhi Byahut"
+    },
+    {
+      "id": "p3",
+      "name": "Shubham Karn"
+    },
+    {
+      "id": "p4",
+      "name": "Elvish Yadav"
+    },
+    {
+      "id": "p5",
+      "name": "Sajan Baitha"
+    },
+    {
+      "id": "p6",
+      "name": "Raiyan Hussain"
+    },
+    {
+      "id": "p7",
+      "name": "Shubham Yadav"
+    },
+    {
+      "id": "p8",
+      "name": "Sumit Gupta"
+    }
+  ],
+  "matches": [
+    {
+      "id": "m1",
+      "number": 1,
+      "round": "Opening Round",
+      "category": "Opening Round",
+      "player1": "Sahaj Shrestha",
+      "player2": "Ridhi Byahut",
+      "winner": "Sahaj Shrestha",
+      "status": "COMPLETED",
+      "resultText": "Sahaj Shrestha defeats Ridhi Byahut",
+      "completed": true,
+      "target": "m5",
+      "slot": "slot1"
+    },
+    {
+      "id": "m2",
+      "number": 2,
+      "round": "Opening Round",
+      "category": "Opening Round",
+      "player1": "Shubham Karn",
+      "player2": "Elvish Yadav",
+      "winner": "Elvish Yadav",
+      "status": "COMPLETED",
+      "resultText": "Elvish Yadav defeats Shubham Karn",
+      "completed": true,
+      "target": "m5",
+      "slot": "slot2"
+    },
+    {
+      "id": "m3",
+      "number": 3,
+      "round": "Opening Round",
+      "category": "Opening Round",
+      "player1": "Sajan Baitha",
+      "player2": "Raiyan Hussain",
+      "winner": "Sajan Baitha",
+      "status": "COMPLETED",
+      "resultText": "Sajan Baitha defeats Raiyan Hussain",
+      "completed": true,
+      "target": "m6",
+      "slot": "slot1"
+    },
+    {
+      "id": "m4",
+      "number": 4,
+      "round": "Opening Round",
+      "category": "Opening Round",
+      "player1": "Shubham Yadav",
+      "player2": "Sumit Gupta",
+      "winner": "Shubham Yadav",
+      "status": "COMPLETED",
+      "resultText": "Shubham Yadav defeats Sumit Gupta",
+      "completed": true,
+      "target": "m6",
+      "slot": "slot2"
+    },
+    {
+      "id": "m5",
+      "number": 5,
+      "round": "Semifinal 1",
+      "category": "Semifinal",
+      "player1": "Sahaj Shrestha",
+      "player2": "Elvish Yadav",
+      "winner": "Sahaj Shrestha",
+      "status": "COMPLETED",
+      "resultText": "Sahaj Shrestha defeats Elvish Yadav",
+      "completed": true,
+      "target": "m7",
+      "slot": "slot1",
+      "loserTarget": "m8",
+      "loserSlot": "slot1"
+    },
+    {
+      "id": "m6",
+      "number": 6,
+      "round": "Semifinal 2",
+      "category": "Semifinal",
+      "player1": "Sajan Baitha",
+      "player2": "Shubham Yadav",
+      "winner": "Sajan Baitha",
+      "status": "COMPLETED",
+      "resultText": "Sajan Baitha defeats Shubham Yadav",
+      "completed": true,
+      "target": "m7",
+      "slot": "slot2",
+      "loserTarget": "m8",
+      "loserSlot": "slot2"
+    },
+    {
+      "id": "m7",
+      "number": 7,
+      "round": "Grand Final",
+      "category": "Final",
+      "player1": "Sajan Baitha",
+      "player2": "Sahaj Shrestha",
+      "winner": null,
+      "status": "PENDING",
+      "resultText": "Result Pending",
+      "completed": false,
+      "target": null,
+      "slot": "final"
+    },
+    {
+      "id": "m8",
+      "number": 8,
+      "round": "Third-Place Playoff",
+      "category": "Third-Place Playoff",
+      "player1": "Elvish Yadav",
+      "player2": "Shubham Yadav",
+      "winner": "Elvish Yadav",
+      "status": "COMPLETED",
+      "resultText": "Elvish Yadav defeats Shubham Yadav",
+      "completed": true,
+      "target": null,
+      "slot": "third"
+    }
+  ],
+  "history": [
+    {
+      "name": "Sahaj Shrestha",
+      "position": "Champion",
+      "tournamentDate": "Previous tournament",
+      "edition": "Sahashrista",
+      "photo": "",
+      "achievements": "Champion of the Sahashrista tournament."
+    }
+  ],
+  "champion": {
+    "winner": null,
+    "runnerUp": null,
+    "finalConfirmed": false
+  },
+  "settings": {
+    "presentationMode": false,
+    "reducedMotion": false
+  },
+  "selectedAdminMatch": "m7"
+}
