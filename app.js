@@ -2,11 +2,6 @@ const $ = (selector) => document.querySelector(selector);
 const isAdminPage = document.body.dataset.page === 'admin';
 const PRESENTATION_KEY = 't10-showdown-presentation-mode';
 const BANNER_KEY = 't10-showdown-featured-banner';
-const ORGANIZING_COMMITTEE = [
-  { role: 'Chief Organizer', names: ['Sajan Baitha'] },
-  { role: 'Host', names: ['Ridhi Byahut'] },
-  { role: 'Members', names: ['Shubham Yadav', 'Sahaj Shrestha', 'Sumit Gupta'] }
-];
 let state = null;
 let adminAuthenticated = false;
 let replayWaitCancel = null;
@@ -21,6 +16,7 @@ let clockState = { whiteSeconds: 600, blackSeconds: 600, activeSide: null, runni
 let entranceObserver = null;
 let certificateReturnFocus = null;
 let activeGeneratedCertificate = null;
+let rosterDraft = null;
 
 async function requestJSON(url, options = {}) {
   let response;
@@ -31,14 +27,14 @@ async function requestJSON(url, options = {}) {
       ...options
     });
   } catch {
-    throw new Error('The tournament server is not running. Start it with `npm start` and open the address on port 3000 (not Live Server).');
+    throw new Error('The tournament API is unavailable. Check the Vercel deployment and its database configuration.');
   }
 
   let result;
   try {
     result = await response.json();
   } catch {
-    throw new Error('This page is being served without the tournament backend. Start it with `npm start` and use the address on port 3000 (not Live Server).');
+    throw new Error('The deployment is missing the tournament API. Redeploy the project with its root-level api/ functions.');
   }
   if (!response.ok) {
     const error = new Error(result.error || 'The request could not be completed.');
@@ -57,13 +53,17 @@ async function loadState() {
   return result;
 }
 
-async function saveState() {
+async function saveState({ players = state.players, committee = state.committee } = {}) {
   try {
     await requestJSON('/api/state', {
       method: 'PUT',
-      body: JSON.stringify({ matches: state.matches.map(({ id, winner, status }) => ({ id, winner, status })) })
+      body: JSON.stringify({
+        matches: state.matches.map(({ id, winner, status }) => ({ id, winner, status })),
+        players,
+        committee
+      })
     });
-    showAdminMessage('Results saved successfully.', 'success');
+    showAdminMessage('Tournament changes saved successfully.', 'success');
     return true;
   } catch (error) {
     if (error.status === 401) {
@@ -73,6 +73,107 @@ async function saveState() {
     showAdminMessage(error.message, 'error');
     return false;
   }
+}
+
+function renderAdminRoster() {
+  const playerRoster = $('#admin-player-roster');
+  const committeeRoster = $('#admin-committee-roster');
+  if (!playerRoster || !committeeRoster) return;
+  if (!rosterDraft) {
+    rosterDraft = {
+      players: structuredClone(state.players),
+      committee: structuredClone(state.committee)
+    };
+  }
+
+  playerRoster.innerHTML = `
+    <h3>Tournament Players</h3>
+    <p class="admin-roster-note">Player names can be changed without removing players or clearing match results.</p>
+    <div class="admin-roster-fields">
+      ${rosterDraft.players.map((player, index) => `
+        <div class="admin-roster-row">
+          <label for="roster-player-${index}">Player ${index + 1}</label>
+          <input id="roster-player-${index}" name="player-${index}" value="${escapeHTML(player.name)}" maxlength="80" required />
+        </div>
+      `).join('')}
+    </div>
+  `;
+
+  committeeRoster.innerHTML = `
+    <h3>Organizing Committee</h3>
+    ${rosterDraft.committee.map(({ role, names }, groupIndex) => `
+      <fieldset class="admin-roster-section">
+        <legend>${escapeHTML(role)}</legend>
+        <div class="admin-roster-fields">
+          ${names.map((name, memberIndex) => `
+            <div class="admin-roster-row">
+              <label for="committee-${groupIndex}-${memberIndex}">${escapeHTML(role)} ${memberIndex + 1}</label>
+              <input id="committee-${groupIndex}-${memberIndex}" name="committee-${groupIndex}-${memberIndex}" value="${escapeHTML(name)}" maxlength="80" required />
+              <button class="button ghost admin-remove-member" type="button" data-remove-member="${groupIndex}-${memberIndex}" aria-label="Remove ${escapeHTML(name)} from ${escapeHTML(role)}">Remove</button>
+            </div>
+          `).join('')}
+        </div>
+        <button class="button ghost admin-add-member" type="button" data-add-member="${groupIndex}">Add ${escapeHTML(role.toLowerCase())}</button>
+      </fieldset>
+    `).join('')}
+  `;
+
+  committeeRoster.querySelectorAll('[data-add-member]').forEach((button) => {
+    button.addEventListener('click', () => {
+      captureAdminRosterDraft();
+      const groupIndex = Number(button.dataset.addMember);
+      rosterDraft.committee[groupIndex].names.push('');
+      renderAdminRoster();
+      const inputs = committeeRoster.querySelectorAll(`input[name^="committee-${groupIndex}-"]`);
+      inputs[inputs.length - 1]?.focus();
+    });
+  });
+  committeeRoster.querySelectorAll('[data-remove-member]').forEach((button) => {
+    button.addEventListener('click', () => {
+      captureAdminRosterDraft();
+      const [groupIndex, memberIndex] = button.dataset.removeMember.split('-').map(Number);
+      rosterDraft.committee[groupIndex].names.splice(memberIndex, 1);
+      renderAdminRoster();
+    });
+  });
+}
+
+function captureAdminRosterDraft() {
+  const form = $('#admin-roster-form');
+  if (!form) return;
+  rosterDraft.players = rosterDraft.players.map((player, index) => ({
+    ...player,
+    name: form.elements.namedItem(`player-${index}`).value.trim()
+  }));
+  rosterDraft.committee = rosterDraft.committee.map(({ role, names }, groupIndex) => ({
+    role,
+    names: names.map((_, memberIndex) =>
+      form.elements.namedItem(`committee-${groupIndex}-${memberIndex}`).value.trim())
+  }));
+}
+
+async function saveAdminRoster(event) {
+  event.preventDefault();
+  const previousPlayerNames = state.players.map((player) => player.name);
+  captureAdminRosterDraft();
+  const players = structuredClone(rosterDraft.players);
+  const committee = structuredClone(rosterDraft.committee);
+  const renamedPlayers = new Map(previousPlayerNames.map((name, index) => [name, players[index].name]));
+  if (!await saveState({ players, committee })) return;
+
+  state.players = players;
+  state.committee = committee;
+  for (const match of state.matches) {
+    for (const field of ['player1', 'player2', 'winner']) {
+      if (match[field] && renamedPlayers.has(match[field])) {
+        match[field] = renamedPlayers.get(match[field]);
+      }
+    }
+    match.resultText = match.winner ? `${match.winner} wins` : 'Result Pending';
+  }
+  updateFinalStandings();
+  rosterDraft = null;
+  renderEverything();
 }
 
 function getMatchById(id) {
@@ -764,7 +865,7 @@ function renderCertificates() {
 }
 
 function renderOrganizationCommittee() {
-  const markup = ORGANIZING_COMMITTEE.map(({ role, names }) => `
+  const markup = (state.committee || []).map(({ role, names }) => `
     <article class="committee-card">
       <p class="committee-role">${escapeHTML(role)}</p>
       <p class="committee-names">${names.map((name) => `<span class="committee-member">${escapeHTML(name)}</span>`).join('')}</p>
@@ -1494,6 +1595,7 @@ function renderEverything() {
   renderHistory();
   renderAdminList();
   renderAdminEditor();
+  renderAdminRoster();
   renderCertificates();
   renderOrganizationCommittee();
   renderClockDemo();
@@ -1538,6 +1640,7 @@ function setAdminView(authenticated) {
 async function initializeAdminPage() {
   setAdminView(false);
   const loginForm = $('#admin-login-form');
+  $('#admin-roster-form').addEventListener('submit', saveAdminRoster);
   const logoutButton = $('#admin-logout');
 
   loginForm.addEventListener('submit', async (event) => {
@@ -1552,6 +1655,7 @@ async function initializeAdminPage() {
       passwordInput.value = '';
       adminAuthenticated = true;
       state = await loadState();
+      rosterDraft = null;
       setAdminView(true);
       renderEverything();
       showAdminMessage('Signed in. Result changes are protected and saved on this server.', 'success');
@@ -1566,6 +1670,7 @@ async function initializeAdminPage() {
       await requestJSON('/api/logout', { method: 'POST', body: '{}' });
       adminAuthenticated = false;
       state = null;
+      rosterDraft = null;
       setAdminView(false);
       showAdminMessage('You have been signed out.');
       $('#admin-password').focus();
@@ -1579,6 +1684,7 @@ async function initializeAdminPage() {
     adminAuthenticated = session.authenticated;
     if (adminAuthenticated) {
       state = await loadState();
+      rosterDraft = null;
       setAdminView(true);
       renderEverything();
     }

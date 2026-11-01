@@ -2,12 +2,17 @@
   "name": "t10-showdown",
   "version": "1.0.0",
   "private": true,
-  "description": "T10 Showdown tournament website and admin server",
+  "description": "T10 Showdown website with a Vercel serverless backend",
   "scripts": {
-    "start": "node server.js",
-    "check": "node --check server.js && node --check app.js"
+    "check": "node --check backend/server.js && node --check app.js && node --check api/state.mjs && node --check api/session.mjs && node --check api/login.mjs && node --check api/logout.mjs && node --check backend/api/state.mjs && node --check backend/api/session.mjs && node --check backend/api/login.mjs && node --check backend/api/logout.mjs && node --check backend/lib/vercel-handler.js && node --check backend/lib/database.js && node --check backend/scripts/import-state.js",
+    "test": "npm run check",
+    "vercel-build": "npm run check",
+    "import:state": "node backend/scripts/import-state.js"
   },
   "engines": {
     "node": ">=18"
+  },
+  "dependencies": {
+    "pg": "^8.23.1"
   }
 }

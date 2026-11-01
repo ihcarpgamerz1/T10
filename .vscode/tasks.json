@@ -2,16 +2,14 @@
 	"version": "2.0.0",
 	"tasks": [
 		{
-			"label": "Start T10 Showdown server",
+			"label": "Validate Vercel deployment",
 			"type": "shell",
 			"command": "npm",
 			"args": [
-				"start"
+				"run",
+				"check"
 			],
-			"isBackground": true,
-			"problemMatcher": [
-				"$node"
-			],
+			"problemMatcher": [],
 			"group": "build"
 		}
 	]

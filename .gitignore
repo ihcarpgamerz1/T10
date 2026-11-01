@@ -1,2 +1,3 @@
-data/state.json
-data/state.json.*.tmp
+node_modules/
+backend/data/state.json
+backend/data/state.json.*.tmp

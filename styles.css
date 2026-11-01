@@ -1319,6 +1319,105 @@ button:focus-visible {
   margin-top: 18px;
 }
 
+.admin-roster-form {
+  display: grid;
+  gap: 20px;
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(205, 168, 93, 0.18);
+}
+
+.admin-roster-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.admin-roster-heading h3,
+.admin-roster-group > h3 {
+  margin: 0;
+  color: var(--gold-soft);
+  font-family: 'Cinzel', serif;
+  font-size: 0.95rem;
+}
+
+.admin-roster-heading p:last-child,
+.admin-roster-note {
+  margin: 3px 0 0;
+  color: var(--muted);
+  font-size: 0.72rem;
+  line-height: 1.6;
+}
+
+.admin-roster-fields {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 11px;
+}
+
+.admin-roster-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 7px 10px;
+  align-items: end;
+}
+
+.admin-roster-row label {
+  grid-column: 1 / -1;
+  color: #d7bd85;
+  font-size: 0.63rem;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+.admin-roster-row input {
+  width: 100%;
+  min-width: 0;
+  min-height: 42px;
+  border: 1px solid rgba(205, 168, 93, 0.22);
+  border-radius: 10px;
+  padding: 0.65rem 0.8rem;
+  background: rgba(5, 10, 16, 0.65);
+  color: var(--white);
+}
+
+.admin-roster-row input:focus-visible {
+  outline: 2px solid rgba(205, 168, 93, 0.72);
+  outline-offset: 2px;
+}
+
+.admin-roster-section {
+  display: grid;
+  gap: 12px;
+  min-width: 0;
+  margin: 0;
+  padding: 14px;
+  border: 1px solid rgba(205, 168, 93, 0.16);
+  border-radius: 13px;
+}
+
+.admin-roster-section legend {
+  padding: 0 7px;
+  color: var(--gold-soft);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.admin-roster-row .admin-remove-member {
+  min-height: 42px;
+  padding: 0 12px;
+  color: #f0aaa0;
+  border-color: rgba(220, 110, 97, 0.35);
+}
+
+.admin-roster-form > .button {
+  justify-self: start;
+}
+
 .committee-admin-heading {
   display: flex;
   align-items: flex-end;

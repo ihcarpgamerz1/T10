@@ -41,6 +41,20 @@
       "name": "Sumit Gupta"
     }
   ],
+  "committee": [
+    {
+      "role": "Chief Organizer",
+      "names": ["Sajan Baitha"]
+    },
+    {
+      "role": "Host",
+      "names": ["Ridhi Byahut"]
+    },
+    {
+      "role": "Members",
+      "names": ["Shubham Yadav", "Sahaj Shrestha", "Sumit Gupta"]
+    }
+  ],
   "matches": [
     {
       "id": "m1",
